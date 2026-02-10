@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Employee;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,26 @@ class EmployeeSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $employees = [
+            [
+                'name' => 'Abdul Haris',
+                'position' => 'Manager',
+                'salary' => 50000
+            ],
+            [
+                'name' => 'Anggun Purwaningsih',
+                'position' => 'Accountant',
+                'salary' => 40000
+            ],
+            [
+                'name' => 'John Doe',
+                'position' => 'Software Engineer',
+                'salary' => 30000
+            ]
+        ];
+
+        foreach ($employees as $employee) {
+            Employee::create($employee);
+        }
     }
 }
