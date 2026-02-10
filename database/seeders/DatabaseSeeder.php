@@ -23,6 +23,9 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
 
-        $this->call(EmployeeSeeder::class);
+        $this->call([
+            DepartementSeeder::class,
+            EmployeeSeeder::class,
+        ]);
     }
 }

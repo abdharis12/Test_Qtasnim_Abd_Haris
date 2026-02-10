@@ -17,17 +17,20 @@ class EmployeeSeeder extends Seeder
             [
                 'name' => 'Abdul Haris',
                 'position' => 'Manager',
-                'salary' => 50000
+                'salary' => 50000,
+                'department_id' => 1
             ],
             [
                 'name' => 'Anggun Purwaningsih',
                 'position' => 'Accountant',
-                'salary' => 40000
+                'salary' => 40000,
+                'department_id' => 2
             ],
             [
                 'name' => 'John Doe',
                 'position' => 'Software Engineer',
-                'salary' => 30000
+                'salary' => 30000,
+                'department_id' => 3
             ]
         ];
 
