@@ -84,22 +84,7 @@ php artisan migrate:fresh --seed
 npm run dev
 ```
 
-### 6. Get Token for Test API 
-
-```bash
-# Jalankan Tinker untuk ambil token agar bisa test api di postman
-php artisan tinker
-
-# Cari user berdasarkan ID atau Email
-$user = App\Models\User::where('email', 'abdharis.datuamas@gmail.com')->first();
-
-# Generate token
-$token = $user->createToken('TestToken')->plainTextToken;
-
-# Copy token dan paste ke bearer token di postman
-```
-
-### 7. Start Development Server
+### 6. Start Development Server
 
 ```bash
 # In terminal 1 - Laravel server
@@ -124,13 +109,19 @@ Access application: `http://localhost:8000`
 
 ### API (Sanctum)
 
-#### 1. Login to get token
-```bash
-# First, login via web interface or register
+#### 1. Get token dengan Tinker
 
-# Get token from authenticated user
-POST /api/user
-Headers: Cookie with session
+```bash
+# Jalankan Tinker untuk ambil token agar bisa test api di postman
+php artisan tinker
+
+# Cari user berdasarkan ID atau Email
+$user = App\Models\User::where('email', 'abdharis.datuamas@gmail.com')->first();
+
+# Generate token
+$token = $user->createToken('TestToken')->plainTextToken;
+
+# Copy token dan paste ke bearer token di postman
 ```
 
 #### 2. Use token in API requests
@@ -139,7 +130,6 @@ Headers: Cookie with session
 GET /api/employees
 Headers: 
   Accept: application/json
-  Cookie: laravel_session=...
 ```
 
 **Note:** Sanctum uses session-based authentication for SPA and token-based for external APIs.
