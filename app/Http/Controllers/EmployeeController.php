@@ -17,14 +17,14 @@ class EmployeeController extends Controller
     public function index(Request $request): Response
     {
         $search = $request->input('search', '');
-        $page = $request->input('page', 1);
         $perPage = $request->input('per_page', 2);
 
         $query = Employee::with('department');
 
         // Apply search filter
         if (!empty($search)) {
-            $query->where('name', 'LIKE', "%{$search}%")->orWhere('position', 'LIKE', "%{$search}%");
+            $query->where('name', 'LIKE', "%{$search}%")
+                ->orWhere('position', 'LIKE', "%{$search}%");
         }
 
         // Get paginated results
@@ -57,26 +57,31 @@ class EmployeeController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:100',
-            'position' => 'required|string|max:50',
-            'salary' => 'required|numeric|min:0.01',
-            'department_id' => 'nullable|integer|exists:departments,id',
-        ], [
-            'name.required' => 'Name is required and cannot be empty',
-            'name.max' => 'Name cannot exceed 100 characters',
-            'position.required' => 'Position is required and cannot be empty',
-            'position.max' => 'Position cannot exceed 50 characters',
-            'salary.required' => 'Salary is required',
-            'salary.numeric' => 'Salary must be a valid number',
-            'salary.min' => 'Salary must be greater than 0',
-            'department_id.exists' => 'The selected department does not exist',
-        ]);
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:100',
+                'position' => 'required|string|max:50',
+                'salary' => 'required|numeric|min:0.01',
+                'department_id' => 'nullable|integer|exists:departements,id',
+            ], [
+                'name.required' => 'Name is required and cannot be empty',
+                'name.max' => 'Name cannot exceed 100 characters',
+                'position.required' => 'Position is required and cannot be empty',
+                'position.max' => 'Position cannot exceed 50 characters',
+                'salary.required' => 'Salary is required',
+                'salary.numeric' => 'Salary must be a valid number',
+                'salary.min' => 'Salary must be greater than 0',
+                'department_id.exists' => 'The selected department does not exist',
+            ]);
 
-        Employee::create($validated);
+            Employee::create($validated);
 
-        return redirect()->route('employees.index')
-            ->with('success', 'Employee created successfully.');
+            return redirect()->route('employeesIndex')
+                ->with('success', 'Employee created successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('employeesIndex')
+                ->with('error', 'An error occurred while creating the employee.');
+        }
     }
 
     /**
@@ -101,7 +106,7 @@ class EmployeeController extends Controller
             'name' => 'required|string|max:100',
             'position' => 'required|string|max:50',
             'salary' => 'required|numeric|min:0.01',
-            'department_id' => 'nullable|integer|exists:departments,id',
+            'department_id' => 'nullable|integer|exists:departements,id',
         ], [
             'name.required' => 'Name is required and cannot be empty',
             'name.max' => 'Name cannot exceed 100 characters',
@@ -115,7 +120,7 @@ class EmployeeController extends Controller
 
         $employee->update($validated);
 
-        return redirect()->route('employees.index')
+        return redirect()->route('employeesIndex')
             ->with('success', 'Employee updated successfully.');
     }
 
@@ -126,7 +131,7 @@ class EmployeeController extends Controller
     {
         $employee->delete();
 
-        return redirect()->route('employees.index')
+        return redirect()->route('employeesIndex')
             ->with('success', 'Employee deleted successfully.');
     }
 }

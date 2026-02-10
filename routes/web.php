@@ -18,7 +18,7 @@ Route::get('dashboard', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('employees', [EmployeeController::class, 'index'])->name('employeesIndex');
     Route::get('employees/create', [App\Http\Controllers\EmployeeController::class, 'create'])->name('employeesCreate');
-    Route::post('employees', [App\Http\Controllers\EmployeeController::class, 'store'])->name('employees.store');
+    Route::post('employees', [App\Http\Controllers\EmployeeController::class, 'store'])->name('employeesStore');
     Route::get('employees/{employee}', [App\Http\Controllers\EmployeeController::class, 'show'])->name('employeesShow');
     Route::get('employees/{employee}/edit', [App\Http\Controllers\EmployeeController::class, 'edit'])->name('employeesEdit');
     Route::put('employees/{employee}', [App\Http\Controllers\EmployeeController::class, 'update'])->name('employeesUpdate');

@@ -27,4 +27,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/{employee}', [EmployeeController::class, 'update']);
         Route::delete('/{employee}', [EmployeeController::class, 'destroy']);
     });
+
+    // Departement routes
+    Route::prefix('departements')->group(function () {
+        Route::get('/', [App\Http\Controllers\Api\DepartementController::class, 'index']);
+        Route::get('/{departement}', [App\Http\Controllers\Api\DepartementController::class, 'show']);
+        Route::post('/', [App\Http\Controllers\Api\DepartementController::class, 'store']);
+        Route::put('/{departement}', [App\Http\Controllers\Api\DepartementController::class, 'update']);
+        Route::delete('/{departement}', [App\Http\Controllers\Api\DepartementController::class, 'destroy']);
+    });
 });
